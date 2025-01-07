@@ -12,7 +12,7 @@ const center = {
 };
 
 export const Map = () => (
-  <LoadScript googleMapsApiKey="AIzaSyB0bBMrnONtIyZuzVrd0JFb2X3ptgGwdHA">
+  <LoadScript googleMapsApiKey="">
     <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={10}>
       {/* Marker gibi ek özellikler burada yer alabilir */}
     </GoogleMap>
