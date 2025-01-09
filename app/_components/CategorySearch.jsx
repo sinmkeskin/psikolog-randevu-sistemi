@@ -13,7 +13,7 @@ function CategorySearch() {
       </h2>
       <div className="flex w-full max-w-sm items-center space-x-2 flex-col gap-3">
         <Input type="araştır" placeholder="Araştır.." />
-        <Button type="submit">Randevu Al</Button>
+        <Button type="submit">Ara</Button>
       </div>
     </div>
   );
