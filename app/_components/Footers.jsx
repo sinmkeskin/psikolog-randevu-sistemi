@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 
-function Footer() {
+function Footers() {
   return (
     <footer className="bg-gray-50">
       <div className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 lg:px-8">
@@ -19,4 +19,4 @@ function Footer() {
   );
 }
 
-export default Footer;
+export default Footers;
