@@ -1,39 +1,23 @@
 <?php
-header("Content-Type: application/json");
+include('db-config.php');
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "clinic_db";
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
 
-$conn = new mysqli($servername, $username, $password, $dbname);
-if ($conn->connect_error) {
-    die(json_encode(["success" => false, "message" => "Veritabanı bağlantı hatası."]));
-}
+    // Kullanıcıyı veritabanına ekle
+    $sql = "INSERT INTO users (name, e-mail, password) VALUES (?, ?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("sss", $name, $email, $password);
 
-$data = json_decode(file_get_contents("php://input"), true);
-
-$email = $data["email"];
-$password = $data["password"];
-
-$sql = "SELECT * FROM users WHERE email = ?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("s", $email);
-$stmt->execute();
-$result = $stmt->get_result();
-
-if ($result->num_rows > 0) {
-    $user = $result->fetch_assoc();
-    if (password_verify($password, $user["password"])) {
-        unset($user["password"]); // Şifreyi yanıt olarak göndermeyin
-        echo json_encode(["success" => true, "user" => $user]);
+    if ($stmt->execute()) {
+        echo json_encode(["message" => "Kayıt başarılı!"]);
     } else {
-        echo json_encode(["success" => false, "message" => "Geçersiz şifre."]);
+        echo json_encode(["error" => "Kayıt başarısız!", "details" => $conn->error]);
     }
-} else {
-    echo json_encode(["success" => false, "message" => "Kullanıcı bulunamadı."]);
-}
 
-$stmt->close();
-$conn->close();
+    $stmt->close();
+    $conn->close();
+}
 ?>

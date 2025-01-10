@@ -1,85 +1,94 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 
-const RegisterPage = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    password: "",
-  });
+export default function RegisterPage() {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await fetch("http://localhost/clinic-api/register.php", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    });
-    const data = await response.json();
-    if (data.success) {
-      alert("Kayıt başarılı! Giriş yapabilirsiniz.");
-      window.location.href = "/login"; // Giriş sayfasına yönlendir
-    } else {
-      alert(data.message || "Bir hata oluştu.");
+
+    try {
+      const response = await fetch("http://localhost/clinic-api/register.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          firstName,
+          lastName,
+          email,
+          password,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.message) {
+        alert(data.message); // Başarılı kayıt mesajı
+      } else {
+        alert(data.error); // Hata mesajı
+      }
+    } catch (error) {
+      console.error("Kayıt işlemi sırasında bir hata oluştu:", error);
     }
   };
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen">
-      <h1 className="text-2xl font-bold mb-4">Kayıt Ol</h1>
-      <form
-        onSubmit={handleSubmit}
-        className="flex flex-col gap-3 border p-6 rounded-md w-96"
-      >
-        <label>
-          Ad Soyad:
+    <div className="register-container">
+      <form className="register-form" onSubmit={handleSubmit}>
+        <h2>Kayıt Ol</h2>
+        <div className="form-group">
+          <label htmlFor="firstName">Ad:</label>
           <input
             type="text"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
+            id="firstName"
+            placeholder="Adınızı girin"
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
             required
-            className="w-full border p-2 rounded-md"
           />
-        </label>
-        <label>
-          E-posta:
+        </div>
+        <div className="form-group">
+          <label htmlFor="lastName">Soyad:</label>
+          <input
+            type="text"
+            id="lastName"
+            placeholder="Soyadınızı girin"
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="email">E-posta:</label>
           <input
             type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
+            id="email"
+            placeholder="E-posta adresinizi girin"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             required
-            className="w-full border p-2 rounded-md"
           />
-        </label>
-        <label>
-          Şifre:
+        </div>
+        <div className="form-group">
+          <label htmlFor="password">Şifre:</label>
           <input
             type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
+            id="password"
+            placeholder="Şifrenizi girin"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             required
-            className="w-full border p-2 rounded-md"
           />
-        </label>
-        <button
-          type="submit"
-          className="bg-green-500 text-white p-2 rounded-md"
-        >
+        </div>
+        <button type="submit" className="register-button">
           Kayıt Ol
         </button>
       </form>
     </div>
   );
-};
-
-export default RegisterPage;
+}

@@ -1,7 +1,16 @@
+"use client";
+
 import React from "react";
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
 function Hero() {
+  const router = useRouter();
+
+  const handleAppointmentClick = () => {
+    router.push("/doctors"); // Danışmanlarımız sayfasına yönlendirme
+  };
+
   return (
     <section>
       <div className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 lg:px-8">
@@ -18,7 +27,9 @@ function Hero() {
                 hemen randevunuzu talep edin. Sağlıklı yarınlar için sizi
                 bekliyoruz!
               </p>
-              <Button className="mt-10">Randevu Talep Edin</Button>
+              <Button className="mt-10" onClick={handleAppointmentClick}>
+                Randevu Talep Edin
+              </Button>
             </div>
           </div>
           {/* Google Maps Embed */}

@@ -1,32 +1,38 @@
 <?php
-header("Content-Type: application/json");
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type");
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "clinic_db";
+include('db-config.php');
 
-$conn = new mysqli($servername, $username, $password, $dbname);
-if ($conn->connect_error) {
-    die(json_encode(["success" => false, "message" => "Veritabanı bağlantı hatası."]));
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+
+    // Kullanıcıyı ekle
+    $sql = "INSERT INTO users (Email, Password) VALUES ('$email', '$password')";
+
+    if ($conn->query($sql) === TRUE) {
+        echo "Kayıt başarılı!";
+    } else {
+        echo "Hata: " . $conn->error;
+    }
 }
-
-$data = json_decode(file_get_contents("php://input"), true);
-
-$name = $data["name"];
-$email = $data["email"];
-$password = password_hash($data["password"], PASSWORD_BCRYPT);
-
-$sql = "INSERT INTO users (name, email, password) VALUES (?, ?, ?)";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("sss", $name, $email, $password);
-
-if ($stmt->execute()) {
-    echo json_encode(["success" => true, "message" => "Kayıt başarılı."]);
-} else {
-    echo json_encode(["success" => false, "message" => "Kayıt başarısız."]);
-}
-
-$stmt->close();
-$conn->close();
 ?>
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Kayıt Ol</title>
+</head>
+<body>
+    <form action="register.php" method="POST">
+        <label for="email">E-posta:</label><br>
+        <input type="email" name="email" required><br>
+        <label for="password">Şifre:</label><br>
+        <input type="password" name="password" required><br><br>
+        <button type="submit">Kayıt Ol</button>
+    </form>
+</body>
+</html>

@@ -1,9 +1,20 @@
+"use client";
+
 import React from "react";
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 function Header() {
+  const router = useRouter();
+
+  const handleLoginClick = () => {
+    router.push("/login");
+  };
+
+  const handleDoctorClick = () => {
+    router.push("/doctors");
+  };
+
   const Menu = [
     {
       id: 1,
@@ -18,7 +29,7 @@ function Header() {
     {
       id: 3,
       name: "Bloglar",
-      path: "/",
+      path: "/blogs",
     },
   ];
 
@@ -29,15 +40,19 @@ function Header() {
         <ul className="md:flex gap-8 hidden">
           {Menu.map((item) => (
             <li
-              key={item.id} // key özelliği eklendi
+              key={item.id}
               className="hover:text-primary cursor-pointer hover:scale-105 transition-all ease-in-out"
             >
-              <Link href={item.path}>{item.name}</Link>
+              <a href={item.path}>{item.name}</a>
             </li>
           ))}
         </ul>
       </div>
-      <Button>Giriş Yap</Button>
+      <div className="flex gap-4">
+        <button onClick={handleLoginClick} className="login-button">
+          Giriş Yap
+        </button>
+      </div>
     </div>
   );
 }
