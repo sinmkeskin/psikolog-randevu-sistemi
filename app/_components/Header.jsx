@@ -13,7 +13,7 @@ function Header() {
     {
       id: 2,
       name: "Danışmanlarımız",
-      path: "/explore",
+      path: "/doctors",
     },
     {
       id: 3,
