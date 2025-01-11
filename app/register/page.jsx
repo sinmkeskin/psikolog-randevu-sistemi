@@ -25,15 +25,28 @@ export default function RegisterPage() {
         }),
       });
 
-      const data = await response.json();
+      const text = await response.text(); // Yanıtı düz metin olarak alın
+      console.log("Backend yanıtı (ham):", text);
+
+      // Yanıtın JSON olup olmadığını kontrol edin
+      let data;
+      try {
+        data = JSON.parse(text);
+      } catch (e) {
+        console.error("JSON parse hatası. Yanıt JSON değil:", text);
+        alert("Sunucudan beklenmeyen bir yanıt alındı.");
+        return;
+      }
+
+      console.log("Backend yanıtı (JSON):", data);
 
       if (data.message) {
-        alert(data.message); // Başarılı kayıt mesajı
+        alert(data.message);
       } else {
-        alert(data.error); // Hata mesajı
+        alert(data.error);
       }
     } catch (error) {
-      console.error("Kayıt işlemi sırasında bir hata oluştu:", error);
+      console.error("Fetch hatası:", error);
     }
   };
 

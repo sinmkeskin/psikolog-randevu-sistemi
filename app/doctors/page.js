@@ -67,12 +67,13 @@ const DoctorsPage = () => {
               <img
                 src={
                   doctor.photo
-                    ? `http://localhost/clinic-api/images/${doctor.photo}`
-                    : "http://localhost/clinic-api/images/default.jpg"
+                    ? `data:image/jpeg;base64,${doctor.photo}` // Base64 formatını kullan
+                    : "http://localhost/clinic-api/images/default.jpg" // Eğer fotoğraf yoksa varsayılan görsel
                 }
                 alt={doctor.name}
                 className="w-24 h-24 object-cover rounded-full mx-auto mb-3"
               />
+
               <h3 className="font-bold">{doctor.name}</h3>
 
               {/* Hover'da Biyografi */}

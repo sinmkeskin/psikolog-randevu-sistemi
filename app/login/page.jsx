@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import "./../globals.css"; // Eğer bir genel stil dosyanız varsa ekleyin
+import "./../globals.css";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -12,20 +12,29 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // API'ye bağlanmak için fetch kullanabilirsiniz
-    const response = await fetch("/api/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email, password }),
-    });
+    try {
+      const response = await fetch("http://localhost/clinic-api/login.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
 
-    if (response.ok) {
-      // Başarılı girişte yönlendirme yap
-      router.push("/doctors");
-    } else {
-      alert("Giriş başarısız! Lütfen bilgilerinizi kontrol edin.");
+      if (response.ok) {
+        const data = await response.json(); // Backend'den dönen kullanıcı bilgileri
+        localStorage.setItem(
+          "user",
+          JSON.stringify({ name: data.name, email: data.email })
+        );
+        alert("Başarıyla giriş yaptınız!");
+        router.push("/"); // Anasayfaya yönlendir
+      } else {
+        alert("Giriş bilgileri yanlış!");
+      }
+    } catch (error) {
+      console.error("Giriş sırasında bir hata oluştu:", error);
+      alert("Bir hata oluştu. Lütfen tekrar deneyin.");
     }
   };
 
