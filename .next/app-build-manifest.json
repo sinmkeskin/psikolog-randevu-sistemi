@@ -26,6 +26,11 @@
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/register/page.js"
+    ],
+    "/appointment/[doctorId]/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/appointment/[doctorId]/page.js"
     ]
   }
 }
