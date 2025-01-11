@@ -1,61 +1,51 @@
 <?php
 header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type");
-header('Content-Type: application/json');
-
-// Hata ayıklama için
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+header("Content-Type: application/json");
 
 include('db-config.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // JSON girişini al
     $input = file_get_contents('php://input');
     $data = json_decode($input, true);
 
-    if (!$data) {
-        echo json_encode(['error' => 'Geçersiz JSON verisi.']);
-        exit;
-    }
-
-    // Gerekli alanları al
-    $name = $data['name'] ?? null;
     $email = $data['email'] ?? null;
     $password = $data['password'] ?? null;
 
-    // Alanları doğrula
-    if (!$name || !$email || !$password) {
-        echo json_encode(['error' => 'Ad, e-posta ve şifre gereklidir.']);
+    if (!$email || !$password) {
+        echo json_encode(['error' => 'E-posta ve şifre gereklidir.']);
         exit;
     }
 
-    // Şifreyi hashle
-    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-
-    // SQL sorgusunu hazırla
-    $sql = "INSERT INTO users (name, email, password) VALUES (?, ?, ?)";
-    $stmt = $conn->prepare($sql);
-
+    $stmt = $conn->prepare("SELECT FirstName, LastName, Email, Password FROM users WHERE Email = ?");
     if (!$stmt) {
-        echo json_encode(['error' => 'SQL sorgusu hazırlama hatası: ' . $conn->error]);
+        echo json_encode(['error' => 'SQL hatası: ' . $conn->error]);
         exit;
     }
 
-    // Parametreleri bağla ve sorguyu çalıştır
-    $stmt->bind_param("sss", $name, $email, $hashedPassword);
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-    if ($stmt->execute()) {
-        echo json_encode(['message' => 'Kayıt başarılı!']);
-    } else {
-        echo json_encode(['error' => 'Kayıt başarısız!', 'details' => $stmt->error]);
+    if ($result->num_rows === 0) {
+        echo json_encode(['error' => 'Kullanıcı bulunamadı.']);
+        exit;
     }
 
-    // Kaynakları serbest bırak
+    $user = $result->fetch_assoc();
+
+    if (!password_verify($password, $user['Password'])) {
+        echo json_encode(['error' => 'Geçersiz şifre.']);
+        exit;
+    }
+
+    echo json_encode([
+        'message' => 'Giriş başarılı!',
+        'name' => $user['FirstName'] . ' ' . $user['LastName'],
+        'email' => $user['Email']
+    ]);
+
     $stmt->close();
     $conn->close();
 } else {
-    echo json_encode(['error' => 'Geçersiz istek yöntemi. Sadece POST desteklenir.']);
+    echo json_encode(['error' => 'Geçersiz istek yöntemi.']);
 }

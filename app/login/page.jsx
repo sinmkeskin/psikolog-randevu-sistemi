@@ -22,15 +22,19 @@ function Login() {
       });
 
       if (response.ok) {
-        const data = await response.json(); // Backend'den dönen kullanıcı bilgileri
+        const data = await response.json();
+        console.log("Backend'den dönen data:", data);
+
         localStorage.setItem(
           "user",
           JSON.stringify({ name: data.name, email: data.email })
         );
+
         alert("Başarıyla giriş yaptınız!");
         router.push("/"); // Anasayfaya yönlendir
       } else {
-        alert("Giriş bilgileri yanlış!");
+        const errorData = await response.json();
+        alert(errorData.error || "Giriş bilgileri yanlış!");
       }
     } catch (error) {
       console.error("Giriş sırasında bir hata oluştu:", error);

@@ -1,72 +1,51 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+import { useParams } from "next/navigation"; // URL parametresini almak için
 import AppointmentCalendar from "@/components/AppointmentsCalendar";
 
 const AppointmentPage = () => {
-  const params = useParams();
-  const doctorId = params?.doctorId; // URL'den gelen doktor ID'si
+  const { doctorId } = useParams(); // doctorId'yi useParams ile alıyoruz
   const [doctor, setDoctor] = useState(null);
-  const [availability, setAvailability] = useState([]); // Uygun saatler
-  const [selectedDate, setSelectedDate] = useState(new Date()); // Tarih state'i
-  const [selectedTime, setSelectedTime] = useState(""); // Saat state'i
+  const [availability, setAvailability] = useState([]);
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [selectedTime, setSelectedTime] = useState("");
 
-  const user = JSON.parse(localStorage.getItem("user"));
-  const userEmail = user?.email;
-
-  // Doktor bilgilerini çek
+  // Doktor verilerini al
   useEffect(() => {
-    if (!doctorId) {
-      console.error("Doktor ID bulunamadı.");
-      return;
+    if (doctorId) {
+      fetch(
+        `http://localhost/clinic-api/getDoctorDetails.php?doctor_id=${doctorId}`
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.error) {
+            console.error(data.error);
+            alert("Doktor bilgileri alınırken bir hata oluştu.");
+          } else {
+            setDoctor(data.doctor);
+            setAvailability(data.availability);
+          }
+        })
+        .catch((error) => console.error("API Hatası:", error));
     }
-
-    fetch(
-      `http://localhost/clinic-api/getDoctorDetails.php?doctor_id=${doctorId}`
-    )
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`API Hatası: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then((data) => {
-        if (data?.doctor) {
-          setDoctor(data.doctor);
-        } else {
-          console.error("Doktor bilgileri alınamadı:", data);
-        }
-      })
-      .catch((error) => console.error("API Hatası:", error));
   }, [doctorId]);
 
-  // Randevu Talebi Fonksiyonu
+  // Randevu talebini gönder
   const handleAppointmentRequest = () => {
-    // Kullanıcı bilgilerini `localStorage`'dan al
-    const user = JSON.parse(localStorage.getItem("user")); // `user` bilgisini alıp parse ediyoruz
-    const userEmail = user?.email;
+    const user = JSON.parse(localStorage.getItem("user"));
 
-    if (!userEmail) {
-      alert(
-        "Giriş yapmış görünüyorsunuz, ancak e-posta bilgisi alınamadı. Lütfen tekrar giriş yapmayı deneyin."
-      );
-      return;
-    }
-
-    if (!selectedDate || !selectedTime) {
-      alert("Lütfen bir tarih ve saat seçin!");
+    if (!user || !user.email) {
+      alert("Lütfen giriş yapın!");
       return;
     }
 
     const requestBody = {
-      doctorId,
-      date: selectedDate.toISOString().split("T")[0],
+      doctor_id: doctorId, // doctorId URL'den geliyor
+      date: selectedDate.toISOString().split("T")[0], // YYYY-MM-DD formatında
       time: selectedTime,
-      userEmail, // LocalStorage'dan alınan e-posta
+      userEmail: user.email,
     };
-
-    console.log("Randevu Talebi Gönderiliyor:", requestBody);
 
     fetch("http://localhost/clinic-api/requestAppointment.php", {
       method: "POST",
@@ -75,12 +54,7 @@ const AppointmentPage = () => {
       },
       body: JSON.stringify(requestBody),
     })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`Randevu API Hatası: ${response.status}`);
-        }
-        return response.json();
-      })
+      .then((response) => response.json())
       .then((data) => {
         if (data.success) {
           alert("Randevu talebiniz başarıyla gönderildi!");
@@ -114,6 +88,7 @@ const AppointmentPage = () => {
                 setSelectedDate={setSelectedDate}
                 selectedTime={selectedTime}
                 setSelectedTime={setSelectedTime}
+                availability={availability} // Uygun saatleri geçiyoruz
               />
               <div className="mt-6">
                 <p>

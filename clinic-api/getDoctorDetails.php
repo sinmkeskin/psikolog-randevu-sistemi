@@ -1,19 +1,20 @@
 <?php
+// PHP başlıkları:
 header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type");
+
 header("Content-Type: application/json");
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-include("db-config.php");
 
-$doctorId = $_GET['doctor_id'] ?? null;
+include('db-config.php');
 
+$doctorId = $_GET['doctor_id'] ?? null; // doktor_id parametresini al
 if (!$doctorId) {
     echo json_encode(["error" => "Doktor ID belirtilmedi."]);
     exit;
 }
 
-// Doktor bilgisi ve uygunluk bilgilerini al
+
 $sql = "SELECT name, photo FROM doctors WHERE doctor_id = ?";
 $stmt = $conn->prepare($sql);
 
@@ -28,12 +29,9 @@ $result = $stmt->get_result();
 
 if ($result->num_rows > 0) {
     $doctor = $result->fetch_assoc();
-
-    // Randevu uygunluk bilgisi
     $availability = [];
     $scheduleQuery = "SELECT date, time, is_available FROM doctor_schedule WHERE doctor_id = ?";
     $scheduleStmt = $conn->prepare($scheduleQuery);
-
     if (!$scheduleStmt) {
         echo json_encode(["error" => "Randevu SQL Hatası: " . $conn->error]);
         exit;
