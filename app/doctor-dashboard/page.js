@@ -8,6 +8,7 @@ const DoctorDashboard = () => {
   const [appointments, setAppointments] = useState([]);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedTime, setSelectedTime] = useState("");
+  const [content, setContent] = useState(""); // Blog içeriği
   const router = useRouter();
 
   useEffect(() => {
@@ -42,7 +43,7 @@ const DoctorDashboard = () => {
   };
 
   const handleAvailabilitySubmit = () => {
-    const doctorData = JSON.parse(localStorage.getItem("doctor")); // Doktor bilgilerini çek
+    const doctorData = JSON.parse(localStorage.getItem("doctor"));
 
     if (!doctorData || !doctorData.doctorId) {
       alert("Doktor bilgisi bulunamadı. Lütfen tekrar giriş yapın.");
@@ -50,10 +51,10 @@ const DoctorDashboard = () => {
     }
 
     const requestBody = {
-      doctorId: doctorData.doctorId, // Burada localStorage'den alınan ID'yi kullanıyoruz
-      date: selectedDate.toISOString().split("T")[0], // Tarih
-      time: selectedTime, // Saat
-      isAvailable: 1, // Müsaitlik durumu
+      doctorId: doctorData.doctorId,
+      date: selectedDate.toISOString().split("T")[0],
+      time: selectedTime,
+      isAvailable: 1,
     };
 
     fetch("http://localhost/clinic-api/addAvailability.php", {
@@ -78,8 +79,8 @@ const DoctorDashboard = () => {
 
   const handleAppointmentStatus = (id, status) => {
     const requestBody = {
-      appointmentId: id, // Backend'de id olarak kullanılıyor
-      status, // "approved" veya "rejected"
+      appointmentId: id,
+      status,
     };
 
     fetch("http://localhost/clinic-api/updateAppointmentStatus.php", {
@@ -98,13 +99,40 @@ const DoctorDashboard = () => {
       .then((data) => {
         if (data.success) {
           alert("Randevu durumu başarıyla güncellendi.");
-          fetchAppointments(doctor.doctorId); // Randevuları tekrar yükle
+          fetchAppointments(doctor.doctorId);
         } else {
           alert("Hata: " + data.error);
         }
       })
       .catch((error) => {
         console.error("Durum güncellenirken hata oluştu:", error);
+      });
+  };
+
+  // Blog gönderme fonksiyonu
+  const handleBlogSubmit = () => {
+    const requestBody = {
+      doctorId: doctor.doctorId,
+      content: content,
+    };
+
+    fetch("http://localhost/clinic-api/addBlog.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(requestBody),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          alert("Blog yazısı başarıyla kaydedildi.");
+        } else {
+          alert("Hata: " + data.error);
+        }
+      })
+      .catch((error) => {
+        console.error("API Hatası:", error);
       });
   };
 
@@ -195,8 +223,13 @@ const DoctorDashboard = () => {
             placeholder="Blog içeriği"
             className="w-full border rounded-lg p-4"
             rows="5"
+            value={content}
+            onChange={(e) => setContent(e.target.value)} // İçeriği güncelle
           ></textarea>
-          <button className="bg-blue-600 text-white px-4 py-2 rounded-lg mt-4">
+          <button
+            onClick={handleBlogSubmit}
+            className="bg-blue-600 text-white px-4 py-2 rounded-lg mt-4"
+          >
             Yayınla
           </button>
         </section>
