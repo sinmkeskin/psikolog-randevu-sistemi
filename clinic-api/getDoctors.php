@@ -19,7 +19,7 @@ if ($conn->connect_error) {
 }
 
 // SQL sorgusu
-$sql = "SELECT doctor_id, name, photo, bio FROM doctors"; // Tablonuzun adı 'doctors' ise
+$sql = "SELECT doctorId, name, photo, bio FROM doctors"; // Tablonuzun adı 'doctors' ise
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {

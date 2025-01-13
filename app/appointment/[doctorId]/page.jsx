@@ -15,7 +15,7 @@ const AppointmentPage = () => {
   useEffect(() => {
     if (doctorId) {
       fetch(
-        `http://localhost/clinic-api/getDoctorDetails.php?doctor_id=${doctorId}`
+        `http://localhost/clinic-api/getDoctorDetails.php?doctorId=${doctorId}`
       )
         .then((response) => response.json())
         .then((data) => {
@@ -33,7 +33,7 @@ const AppointmentPage = () => {
 
   // Randevu talebini gönder
   const handleAppointmentRequest = () => {
-    const user = JSON.parse(localStorage.getItem("user"));
+    const user = JSON.parse(localStorage.getItem("user")); // Kullanıcı bilgilerini al
 
     if (!user || !user.email) {
       alert("Lütfen giriş yapın!");
@@ -41,10 +41,10 @@ const AppointmentPage = () => {
     }
 
     const requestBody = {
-      doctor_id: doctorId, // doctorId URL'den geliyor
-      date: selectedDate.toISOString().split("T")[0], // YYYY-MM-DD formatında
-      time: selectedTime,
-      userEmail: user.email,
+      doctorId, // Doktor ID'si
+      date: selectedDate.toISOString().split("T")[0], // Tarih
+      time: selectedTime, // Saat
+      email: user.email, // Kullanıcı e-postasını 'email' olarak gönderiyoruz
     };
 
     fetch("http://localhost/clinic-api/requestAppointment.php", {
@@ -59,10 +59,12 @@ const AppointmentPage = () => {
         if (data.success) {
           alert("Randevu talebiniz başarıyla gönderildi!");
         } else {
-          alert("Randevu talebi başarısız: " + data.message);
+          alert("Hata: " + data.message);
         }
       })
-      .catch((error) => console.error("Randevu talebi hatası:", error));
+      .catch((error) => {
+        console.error("API Hatası:", error);
+      });
   };
 
   return (

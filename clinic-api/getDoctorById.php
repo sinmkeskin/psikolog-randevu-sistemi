@@ -22,17 +22,17 @@ if ($conn->connect_error) {
 // Karakter setini ayarla
 $conn->set_charset("utf8mb4");
 
-// GET parametresinden doctor_id alın
-$doctor_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
+// GET parametresinden doctorId alın
+$doctorId = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
 // Eğer id eksik veya geçersizse hata mesajı gönder
-if ($doctor_id === 0) {
+if ($doctorId === 0) {
     echo json_encode(["error" => "Geçersiz doktor ID"]);
     exit();
 }
 
 // SQL sorgusunu hazırla
-$sql = "SELECT doctor_id, name, speciality, experience, bio, photo FROM doctors WHERE doctor_id = ?";
+$sql = "SELECT doctorId, name, speciality, experience, bio, photo FROM doctors WHERE doctorId = ?";
 $stmt = $conn->prepare($sql);
 
 if (!$stmt) {
@@ -47,7 +47,7 @@ if (!$stmt) {
 }
 
 // Parametreyi bağla ve sorguyu çalıştır
-$stmt->bind_param("i", $doctor_id);
+$stmt->bind_param("i", $doctorId);
 $stmt->execute();
 $result = $stmt->get_result();
 

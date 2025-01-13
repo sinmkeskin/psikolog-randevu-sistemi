@@ -23,7 +23,7 @@ while (strtotime($currentDate) <= strtotime($endDate)) {
     // Günlük saat aralığı arasında döngü
     while (strtotime($currentTime) < strtotime($endTime)) {
         // Veritabanına ekle
-        $stmt = $conn->prepare("INSERT INTO doctor_schedule (doctor_id, date, time, is_available) VALUES (?, ?, ?, ?)");
+        $stmt = $conn->prepare("INSERT INTO doctor_schedule (doctorId, date, time, is_available) VALUES (?, ?, ?, ?)");
         $stmt->bind_param("issi", $doctorId, $currentDate, $currentTime, $isAvailable = 1); // Varsayılan olarak müsait
 
         if (!$stmt->execute()) {

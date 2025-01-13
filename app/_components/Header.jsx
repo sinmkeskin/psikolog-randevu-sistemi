@@ -7,12 +7,19 @@ import { useRouter } from "next/navigation";
 function Header() {
   const router = useRouter();
   const [user, setUser] = useState(null); // Kullanıcı bilgisi için state
+  const [doctor, setDoctor] = useState(null); // Doktor bilgisi için state
 
-  // Kullanıcıyı localStorage'dan al
+  // Kullanıcı ve doktor bilgilerini localStorage'dan al
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
+    const storedDoctor = localStorage.getItem("doctor");
+
     if (storedUser) {
-      setUser(JSON.parse(storedUser)); // Kullanıcıyı state'e yükle
+      setUser(JSON.parse(storedUser));
+    }
+
+    if (storedDoctor) {
+      setDoctor(JSON.parse(storedDoctor));
     }
   }, []);
 
@@ -20,14 +27,19 @@ function Header() {
     router.push("/login");
   };
 
-  const handleLogoutClick = () => {
-    localStorage.removeItem("user"); // Kullanıcıyı localStorage'dan kaldır
-    setUser(null); // Kullanıcıyı state'ten kaldır
-    router.push("/"); // Anasayfaya yönlendir
+  const handleDoctorLoginClick = () => {
+    router.push("/doctor-login");
   };
 
-  const handleDoctorClick = () => {
-    router.push("/doctors");
+  const handleLogoutClick = () => {
+    if (user) {
+      localStorage.removeItem("user");
+      setUser(null);
+    } else if (doctor) {
+      localStorage.removeItem("doctor");
+      setDoctor(null);
+    }
+    router.push("/"); // Anasayfaya yönlendir
   };
 
   const Menu = [
@@ -67,8 +79,16 @@ function Header() {
 
       {/* Kullanıcı Durumu */}
       <div className="flex gap-4">
-        {user ? (
-          // Giriş yapılmışsa
+        {doctor ? (
+          // Doktor girişi yapılmışsa
+          <div className="flex items-center gap-4">
+            <span className="text-lg font-medium">Merhaba, {doctor.name}</span>
+            <button onClick={handleLogoutClick} className="login-button">
+              Çıkış Yap
+            </button>
+          </div>
+        ) : user ? (
+          // Kullanıcı girişi yapılmışsa
           <div className="flex items-center gap-4">
             <span className="text-lg font-medium">Merhaba, {user.name}</span>
             <button onClick={handleLogoutClick} className="login-button">
@@ -76,10 +96,15 @@ function Header() {
             </button>
           </div>
         ) : (
-          // Giriş yapılmamışsa
-          <button onClick={handleLoginClick} className="login-button">
-            Giriş Yap
-          </button>
+          // Hiçbir giriş yapılmamışsa
+          <div className="flex gap-4">
+            <button onClick={handleLoginClick} className="login-button">
+              Giriş Yap
+            </button>
+            <button onClick={handleDoctorLoginClick} className="login-button">
+              Doktor Girişi
+            </button>
+          </div>
         )}
       </div>
     </div>

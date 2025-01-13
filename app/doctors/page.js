@@ -60,7 +60,7 @@ const DoctorsPage = () => {
         <div className="flex gap-5 flex-wrap justify-center mt-5">
           {filteredDoctors.map((doctor) => (
             <div
-              key={doctor.doctor_id}
+              key={doctor.doctorId}
               className="relative group border border-gray-300 rounded-lg p-5 w-60 text-center transition-all duration-300 hover:shadow-lg"
             >
               {/* Fotoğraf ve İsim */}
@@ -85,7 +85,7 @@ const DoctorsPage = () => {
               <div className="mt-3 relative z-10">
                 <Button
                   type="button"
-                  onClick={() => handleAppointment(doctor.doctor_id)}
+                  onClick={() => handleAppointment(doctor.doctorId)}
                 >
                   Randevu Al
                 </Button>

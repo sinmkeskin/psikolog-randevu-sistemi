@@ -8,14 +8,14 @@ header("Content-Type: application/json");
 
 include('db-config.php');
 
-$doctorId = $_GET['doctor_id'] ?? null; // doktor_id parametresini al
+$doctorId = $_GET['doctorId'] ?? null; // doktor_id parametresini al
 if (!$doctorId) {
     echo json_encode(["error" => "Doktor ID belirtilmedi."]);
     exit;
 }
 
 
-$sql = "SELECT name, photo FROM doctors WHERE doctor_id = ?";
+$sql = "SELECT name, photo FROM doctors WHERE doctorId = ?";
 $stmt = $conn->prepare($sql);
 
 if (!$stmt) {
@@ -30,7 +30,7 @@ $result = $stmt->get_result();
 if ($result->num_rows > 0) {
     $doctor = $result->fetch_assoc();
     $availability = [];
-    $scheduleQuery = "SELECT date, time, is_available FROM doctor_schedule WHERE doctor_id = ?";
+    $scheduleQuery = "SELECT date, time, is_available FROM doctor_schedule WHERE doctorId = ?";
     $scheduleStmt = $conn->prepare($scheduleQuery);
     if (!$scheduleStmt) {
         echo json_encode(["error" => "Randevu SQL Hatası: " . $conn->error]);
