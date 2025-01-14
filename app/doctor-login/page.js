@@ -12,19 +12,16 @@ function DoctorLogin() {
     e.preventDefault();
 
     try {
-      const response = await fetch(
-        "http://healthymind.infinityfreeapp.com/doctorLogin.php",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email,
-            password,
-          }),
-        }
-      );
+      const response = await fetch("sql104.infinityfree.comdoctorLogin.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      });
 
       // Yanıtı JSON olarak çözümle
       const data = await response.json();
