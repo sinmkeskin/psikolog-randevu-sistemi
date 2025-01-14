@@ -16,7 +16,7 @@ const AppointmentsCalendar = ({
   useEffect(() => {
     const formattedDate = selectedDate.toISOString().split("T")[0];
     fetch(
-      `healthymind.infinityfreeapp.com/getDoctorDetails.php?doctorId=${doctorId}`
+      `https://healthymind.infinityfreeapp.com/getDoctorDetails.php?doctorId=${doctorId}`
     )
       .then((response) => response.json())
       .then((data) => {

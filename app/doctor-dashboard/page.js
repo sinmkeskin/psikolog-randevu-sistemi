@@ -27,7 +27,7 @@ const DoctorDashboard = () => {
 
   const fetchAppointments = (doctorId) => {
     fetch(
-      `healthymind.infinityfreeapp.com/getAppointments.php?doctorId=${doctorId}`
+      `https://healthymind.infinityfreeapp.com/getAppointments.php?doctorId=${doctorId}`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -57,7 +57,7 @@ const DoctorDashboard = () => {
       isAvailable: 1,
     };
 
-    fetch("healthymind.infinityfreeapp.com/addAvailability.php", {
+    fetch("https://healthymind.infinityfreeapp.com/addAvailability.php", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -83,13 +83,16 @@ const DoctorDashboard = () => {
       status,
     };
 
-    fetch("healthymind.infinityfreeapp.com/updateAppointmentStatus.php", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(requestBody),
-    })
+    fetch(
+      "https://healthymind.infinityfreeapp.com/updateAppointmentStatus.php",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestBody),
+      }
+    )
       .then((response) => {
         if (!response.ok) {
           throw new Error("HTTP isteği başarısız.");
@@ -116,7 +119,7 @@ const DoctorDashboard = () => {
       content: content,
     };
 
-    fetch("healthymind.infinityfreeapp.com/addBlog.php", {
+    fetch("https://healthymind.infinityfreeapp.com/addBlog.php", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

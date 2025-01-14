@@ -14,7 +14,7 @@ function Login() {
 
     try {
       const response = await fetch(
-        "healthymind.infinityfreeapp.com/login.php",
+        "https://healthymind.infinityfreeapp.com/login.php",
         {
           method: "POST",
           headers: {

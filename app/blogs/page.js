@@ -8,7 +8,7 @@ const BlogsPage = () => {
 
   useEffect(() => {
     // API'den blogları al
-    fetch("healthymind.infinityfreeapp.com/getBlogs.php")
+    fetch("https://healthymind.infinityfreeapp.com/getBlogs.php")
       .then((response) => response.json())
       .then((data) => {
         if (data.blogs) {
