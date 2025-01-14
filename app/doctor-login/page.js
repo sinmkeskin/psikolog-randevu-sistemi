@@ -13,7 +13,7 @@ function DoctorLogin() {
 
     try {
       const response = await fetch(
-        "https://healthymind.infinityfreeapp.com/doctorLogin.php",
+        "mysql://u7wwallvnxp5gffz:aAHd4tIiDaDcoQ1oiOiO@bwg9g8ilezeklrvefyjv-mysql.services.clever-cloud.com:3306/bwg9g8ilezeklrvefyjv/doctorLogin.php",
         {
           method: "POST",
           headers: {

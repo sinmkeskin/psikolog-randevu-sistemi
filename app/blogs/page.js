@@ -8,7 +8,9 @@ const BlogsPage = () => {
 
   useEffect(() => {
     // API'den blogları al
-    fetch("https://healthymind.infinityfreeapp.com/getBlogs.php")
+    fetch(
+      "mysql://u7wwallvnxp5gffz:aAHd4tIiDaDcoQ1oiOiO@bwg9g8ilezeklrvefyjv-mysql.services.clever-cloud.com:3306/bwg9g8ilezeklrvefyjv/getBlogs.php"
+    )
       .then((response) => response.json())
       .then((data) => {
         if (data.blogs) {

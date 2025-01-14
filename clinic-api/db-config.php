@@ -1,8 +1,8 @@
 <?php
-$servername = "sql104.infinityfree.com";
-$username = "if0_38104156";
-$password = "Gh9R7CSk7lDD";
-$dbname = "if0_38104156_clinic";
+$servername = "bwg9g8ilezeklrvefyjv-mysql.services.clever-cloud.com";
+$username = "u7wwallvnxp5gffz";
+$password = "aAHd4tIiDaDcoQ1oiOiO";
+$dbname = "bwg9g8ilezeklrvefyjv";
 
 // Veritabanı bağlantısını kur
 $conn = new mysqli($servername, $username, $password, $dbname);

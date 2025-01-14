@@ -27,7 +27,7 @@ const DoctorDashboard = () => {
 
   const fetchAppointments = (doctorId) => {
     fetch(
-      `https://healthymind.infinityfreeapp.com/getAppointments.php?doctorId=${doctorId}`
+      `mysql://u7wwallvnxp5gffz:aAHd4tIiDaDcoQ1oiOiO@bwg9g8ilezeklrvefyjv-mysql.services.clever-cloud.com:3306/bwg9g8ilezeklrvefyjv/getAppointments.php?doctorId=${doctorId}`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -57,13 +57,16 @@ const DoctorDashboard = () => {
       isAvailable: 1,
     };
 
-    fetch("https://healthymind.infinityfreeapp.com/addAvailability.php", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(requestBody),
-    })
+    fetch(
+      "mysql://u7wwallvnxp5gffz:aAHd4tIiDaDcoQ1oiOiO@bwg9g8ilezeklrvefyjv-mysql.services.clever-cloud.com:3306/bwg9g8ilezeklrvefyjv/addAvailability.php",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestBody),
+      }
+    )
       .then((response) => response.json())
       .then((data) => {
         if (data.success) {
@@ -84,7 +87,7 @@ const DoctorDashboard = () => {
     };
 
     fetch(
-      "https://healthymind.infinityfreeapp.com/updateAppointmentStatus.php",
+      "mysql://u7wwallvnxp5gffz:aAHd4tIiDaDcoQ1oiOiO@bwg9g8ilezeklrvefyjv-mysql.services.clever-cloud.com:3306/bwg9g8ilezeklrvefyjv/updateAppointmentStatus.php",
       {
         method: "POST",
         headers: {
@@ -119,13 +122,16 @@ const DoctorDashboard = () => {
       content: content,
     };
 
-    fetch("https://healthymind.infinityfreeapp.com/addBlog.php", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(requestBody),
-    })
+    fetch(
+      "mysql://u7wwallvnxp5gffz:aAHd4tIiDaDcoQ1oiOiO@bwg9g8ilezeklrvefyjv-mysql.services.clever-cloud.com:3306/bwg9g8ilezeklrvefyjv/addBlog.php",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestBody),
+      }
+    )
       .then((response) => response.json())
       .then((data) => {
         if (data.success) {
