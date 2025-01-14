@@ -1,5 +1,5 @@
 <?php
-header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Origin: https://psikolog-randevu-sistemi.vercel.app");
 header("Content-Type: application/json");
 
 include("db-config.php");
