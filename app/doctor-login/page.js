@@ -13,7 +13,7 @@ function DoctorLogin() {
 
     try {
       const response = await fetch(
-        "https://healthymind.infinityfreeapp.com/doctorLogin.php",
+        "https://dash.infinityfree.com/accounts/if0_38104156/domains/healthymind.infinityfreeapp.com/doctorLogin.php",
         {
           method: "POST",
           headers: {
