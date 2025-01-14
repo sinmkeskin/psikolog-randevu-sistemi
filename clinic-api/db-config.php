@@ -1,18 +1,12 @@
 <?php
-$servername = "sql104.infinityfree.com";
-$username = "if0_38104156";
-$password = "Gh9R7CSk7lDD";
-$dbname = "if0_38104156_clinic";
+$servername = "wyqk6x041tfxg39e.chr7pe7iynqr.eu-west-1.rds.amazonaws.com";
+$username = "l9n1gcqkz3jg4j1i";
+$password = "ho5i9oja471s59bs";
+$dbname = "ryyk9o8156jg4usp";
 
 // Veritabanı bağlantısını kur
 $conn = new mysqli($servername, $username, $password, $dbname);
-$conn->set_charset("utf8mb4");
-
 if ($conn->connect_error) {
-    echo json_encode(['error' => 'Veritabanına bağlanılamadı: ' . $conn->connect_error]);
-} else {
-    echo json_encode(['message' => 'Veritabanı bağlantısı başarılı!']);
+    die("Bağlantı hatası: " . $conn->connect_error);
 }
 ?>
-
-
