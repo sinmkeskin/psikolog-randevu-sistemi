@@ -13,7 +13,7 @@ export default function RegisterPage() {
 
     try {
       const response = await fetch(
-        "http://healthymind.infinityfreeapp.com/register.php",
+        "https://healthymind.infinityfreeapp.com/register.php",
         {
           method: "POST",
           headers: {
