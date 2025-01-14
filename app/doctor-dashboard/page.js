@@ -27,7 +27,7 @@ const DoctorDashboard = () => {
 
   const fetchAppointments = (doctorId) => {
     fetch(
-      `http://localhost/clinic-api/getAppointments.php?doctorId=${doctorId}`
+      `healthymind.infinityfreeapp.com/getAppointments.php?doctorId=${doctorId}`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -57,7 +57,7 @@ const DoctorDashboard = () => {
       isAvailable: 1,
     };
 
-    fetch("http://localhost/clinic-api/addAvailability.php", {
+    fetch("healthymind.infinityfreeapp.com/addAvailability.php", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -83,7 +83,7 @@ const DoctorDashboard = () => {
       status,
     };
 
-    fetch("http://localhost/clinic-api/updateAppointmentStatus.php", {
+    fetch("healthymind.infinityfreeapp.com/updateAppointmentStatus.php", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -116,7 +116,7 @@ const DoctorDashboard = () => {
       content: content,
     };
 
-    fetch("http://localhost/clinic-api/addBlog.php", {
+    fetch("healthymind.infinityfreeapp.com/addBlog.php", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

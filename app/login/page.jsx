@@ -13,13 +13,16 @@ function Login() {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost/clinic-api/login.php", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
+      const response = await fetch(
+        "healthymind.infinityfreeapp.com/login.php",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, password }),
+        }
+      );
 
       if (response.ok) {
         const data = await response.json();

@@ -12,18 +12,21 @@ export default function RegisterPage() {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost/clinic-api/register.php", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          firstName,
-          lastName,
-          email,
-          password,
-        }),
-      });
+      const response = await fetch(
+        "healthymind.infinityfreeapp.com/register.php",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            firstName,
+            lastName,
+            email,
+            password,
+          }),
+        }
+      );
 
       const text = await response.text(); // Yanıtı düz metin olarak alın
       console.log("Backend yanıtı (ham):", text);

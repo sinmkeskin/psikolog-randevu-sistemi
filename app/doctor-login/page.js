@@ -13,7 +13,7 @@ function DoctorLogin() {
 
     try {
       const response = await fetch(
-        "http://localhost/clinic-api/doctorLogin.php",
+        "healthymind.infinityfreeapp.com/doctorLogin.php",
         {
           method: "POST",
           headers: {

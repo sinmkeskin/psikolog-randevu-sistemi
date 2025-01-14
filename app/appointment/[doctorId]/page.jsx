@@ -15,7 +15,7 @@ const AppointmentPage = () => {
   useEffect(() => {
     if (doctorId) {
       fetch(
-        `http://localhost/clinic-api/getDoctorDetails.php?doctorId=${doctorId}`
+        `healthymind.infinityfreeapp.com/getDoctorDetails.php?doctorId=${doctorId}`
       )
         .then((response) => response.json())
         .then((data) => {
@@ -47,7 +47,7 @@ const AppointmentPage = () => {
       email: user.email, // Kullanıcı e-postasını 'email' olarak gönderiyoruz
     };
 
-    fetch("http://localhost/clinic-api/requestAppointment.php", {
+    fetch("healthymind.infinityfreeapp.com/requestAppointment.php", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
