@@ -26,7 +26,9 @@ const DoctorDashboard = () => {
   }, []);
 
   const fetchAppointments = (doctorId) => {
-    fetch(`sql104.infinityfree.comgetAppointments.php?doctorId=${doctorId}`)
+    fetch(
+      `https://sql104.infinityfree.com/getAppointments.php?doctorId=${doctorId}`
+    )
       .then((response) => response.json())
       .then((data) => {
         if (data.appointments) {
@@ -55,7 +57,7 @@ const DoctorDashboard = () => {
       isAvailable: 1,
     };
 
-    fetch("sql104.infinityfree.comaddAvailability.php", {
+    fetch("https://sql104.infinityfree.com/addAvailability.php", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -81,7 +83,7 @@ const DoctorDashboard = () => {
       status,
     };
 
-    fetch("sql104.infinityfree.comupdateAppointmentStatus.php", {
+    fetch("https://sql104.infinityfree.com/updateAppointmentStatus.php", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -114,7 +116,7 @@ const DoctorDashboard = () => {
       content: content,
     };
 
-    fetch("sql104.infinityfree.comaddBlog.php", {
+    fetch("https://sql104.infinityfree.com/addBlog.php", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -11,7 +11,7 @@ const DoctorsPage = () => {
   const router = useRouter();
 
   useEffect(() => {
-    fetch("sql104.infinityfree.comgetDoctors.php")
+    fetch("https://sql104.infinityfree.com/getDoctors.php")
       .then((response) => {
         if (!response.ok) {
           throw new Error("API isteği başarısız oldu.");
@@ -68,7 +68,7 @@ const DoctorsPage = () => {
                 src={
                   doctor.photo
                     ? `data:image/jpeg;base64,${doctor.photo}` // Base64 formatını kullan
-                    : "sql104.infinityfree.comimages/default.jpg" // Eğer fotoğraf yoksa varsayılan görsel
+                    : "https://sql104.infinityfree.com/images/default.jpg" // Eğer fotoğraf yoksa varsayılan görsel
                 }
                 alt={doctor.name}
                 className="w-24 h-24 object-cover rounded-full mx-auto mb-3"

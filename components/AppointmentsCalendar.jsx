@@ -15,7 +15,9 @@ const AppointmentsCalendar = ({
   // Seçilen tarihe göre saatleri çek
   useEffect(() => {
     const formattedDate = selectedDate.toISOString().split("T")[0];
-    fetch(`sql104.infinityfree.comgetDoctorDetails.php?doctorId=${doctorId}`)
+    fetch(
+      `https://sql104.infinityfree.com/getDoctorDetails.php?doctorId=${doctorId}`
+    )
       .then((response) => response.json())
       .then((data) => {
         const availableSlots = data.availability.filter(

@@ -8,7 +8,7 @@ const BlogsPage = () => {
 
   useEffect(() => {
     // API'den blogları al
-    fetch("sql104.infinityfree.comgetBlogs.php")
+    fetch("https://sql104.infinityfree.com/getBlogs.php")
       .then((response) => response.json())
       .then((data) => {
         if (data.blogs) {

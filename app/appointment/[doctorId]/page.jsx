@@ -14,7 +14,9 @@ const AppointmentPage = () => {
   // Doktor verilerini al
   useEffect(() => {
     if (doctorId) {
-      fetch(`sql104.infinityfree.comgetDoctorDetails.php?doctorId=${doctorId}`)
+      fetch(
+        `https://sql104.infinityfree.com/getDoctorDetails.php?doctorId=${doctorId}`
+      )
         .then((response) => response.json())
         .then((data) => {
           if (data.error) {
@@ -45,7 +47,7 @@ const AppointmentPage = () => {
       email: user.email, // Kullanıcı e-postasını 'email' olarak gönderiyoruz
     };
 
-    fetch("sql104.infinityfree.comrequestAppointment.php", {
+    fetch("https://sql104.infinityfree.com/requestAppointment.php", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
