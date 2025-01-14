@@ -1,8 +1,8 @@
 <?php
-$servername = "bwg9g8ilezeklrvefyjv-mysql.services.clever-cloud.com";
-$username = "u7wwallvnxp5gffz";
-$password = "aAHd4tIiDaDcoQ1oiOiO";
-$dbname = "bwg9g8ilezeklrvefyjv";
+$servername = "healthymind-server";
+$username = "ncmhsuvwtu";
+$password = "$muv776AVu5HgRcT";
+$dbname = "healthymind-database";
 
 // Veritabanı bağlantısını kur
 $conn = new mysqli($servername, $username, $password, $dbname);
