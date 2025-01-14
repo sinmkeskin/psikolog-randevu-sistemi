@@ -4,11 +4,6 @@ header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type");
 header("Content-Type: application/json");
 
-// Veritabanı bağlantısı
-$servername = "localhost";
-$username = "root"; // Varsayılan kullanıcı adı
-$password = ""; // Varsayılan şifre
-$dbname = "clinic"; // Veritabanı adı
 
 // Bağlantıyı oluştur
 $conn = new mysqli($servername, $username, $password, $dbname);

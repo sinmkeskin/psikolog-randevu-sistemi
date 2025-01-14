@@ -15,7 +15,7 @@ const AppointmentPage = () => {
   useEffect(() => {
     if (doctorId) {
       fetch(
-        `https://healthymind.infinityfreeapp.com/getDoctorDetails.php?doctorId=${doctorId}`
+        `https://psikolog-randevu-579c59e75065.herokuapp.com/getDoctorDetails.php?doctorId=${doctorId}`
       )
         .then((response) => response.json())
         .then((data) => {
@@ -47,13 +47,16 @@ const AppointmentPage = () => {
       email: user.email, // Kullanıcı e-postasını 'email' olarak gönderiyoruz
     };
 
-    fetch("https://healthymind.infinityfreeapp.com/requestAppointment.php", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(requestBody),
-    })
+    fetch(
+      "https://psikolog-randevu-579c59e75065.herokuapp.com/requestAppointment.php",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestBody),
+      }
+    )
       .then((response) => response.json())
       .then((data) => {
         if (data.success) {

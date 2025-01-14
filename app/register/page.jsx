@@ -13,7 +13,7 @@ export default function RegisterPage() {
 
     try {
       const response = await fetch(
-        "https://healthymind.infinityfreeapp.com/register.php",
+        "https://psikolog-randevu-579c59e75065.herokuapp.com/register.php",
         {
           method: "POST",
           headers: {

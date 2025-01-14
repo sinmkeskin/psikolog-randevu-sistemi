@@ -14,7 +14,7 @@ function Login() {
 
     try {
       const response = await fetch(
-        "https://healthymind.infinityfreeapp.com/login.php",
+        "https://psikolog-randevu-579c59e75065.herokuapp.com/login.php",
         {
           method: "POST",
           headers: {
