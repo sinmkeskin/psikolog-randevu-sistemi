@@ -27,7 +27,7 @@ const DoctorDashboard = () => {
 
   const fetchAppointments = (doctorId) => {
     fetch(
-      `https://dash.infinityfree.com/accounts/if0_38104156/domains/healthymind.infinityfreeapp.com/getAppointments.php?doctorId=${doctorId}`
+      `http://healthymind.infinityfreeapp.com/getAppointments.php?doctorId=${doctorId}`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -57,16 +57,13 @@ const DoctorDashboard = () => {
       isAvailable: 1,
     };
 
-    fetch(
-      "https://dash.infinityfree.com/accounts/if0_38104156/domains/healthymind.infinityfreeapp.com/addAvailability.php",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(requestBody),
-      }
-    )
+    fetch("http://healthymind.infinityfreeapp.com/addAvailability.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(requestBody),
+    })
       .then((response) => response.json())
       .then((data) => {
         if (data.success) {
@@ -87,7 +84,7 @@ const DoctorDashboard = () => {
     };
 
     fetch(
-      "https://dash.infinityfree.com/accounts/if0_38104156/domains/healthymind.infinityfreeapp.com/updateAppointmentStatus.php",
+      "http://healthymind.infinityfreeapp.com/updateAppointmentStatus.php",
       {
         method: "POST",
         headers: {
@@ -122,16 +119,13 @@ const DoctorDashboard = () => {
       content: content,
     };
 
-    fetch(
-      "https://dash.infinityfree.com/accounts/if0_38104156/domains/healthymind.infinityfreeapp.com/addBlog.php",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(requestBody),
-      }
-    )
+    fetch("http://healthymind.infinityfreeapp.com/addBlog.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(requestBody),
+    })
       .then((response) => response.json())
       .then((data) => {
         if (data.success) {
