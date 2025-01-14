@@ -16,7 +16,7 @@ const AppointmentsCalendar = ({
   useEffect(() => {
     const formattedDate = selectedDate.toISOString().split("T")[0];
     fetch(
-      `mysql://u7wwallvnxp5gffz:aAHd4tIiDaDcoQ1oiOiO@bwg9g8ilezeklrvefyjv-mysql.services.clever-cloud.com:3306/bwg9g8ilezeklrvefyjv/getDoctorDetails.php?doctorId=${doctorId}`
+      `http://healthymind.infinityfreeapp.com/getDoctorDetails.php?doctorId=${doctorId}`
     )
       .then((response) => response.json())
       .then((data) => {

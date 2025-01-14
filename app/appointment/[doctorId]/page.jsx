@@ -15,7 +15,7 @@ const AppointmentPage = () => {
   useEffect(() => {
     if (doctorId) {
       fetch(
-        `mysql://u7wwallvnxp5gffz:aAHd4tIiDaDcoQ1oiOiO@bwg9g8ilezeklrvefyjv-mysql.services.clever-cloud.com:3306/bwg9g8ilezeklrvefyjv/getDoctorDetails.php?doctorId=${doctorId}`
+        `http://healthymind.infinityfreeapp.com/getDoctorDetails.php?doctorId=${doctorId}`
       )
         .then((response) => response.json())
         .then((data) => {
@@ -47,16 +47,13 @@ const AppointmentPage = () => {
       email: user.email, // Kullanıcı e-postasını 'email' olarak gönderiyoruz
     };
 
-    fetch(
-      "mysql://u7wwallvnxp5gffz:aAHd4tIiDaDcoQ1oiOiO@bwg9g8ilezeklrvefyjv-mysql.services.clever-cloud.com:3306/bwg9g8ilezeklrvefyjv/requestAppointment.php",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(requestBody),
-      }
-    )
+    fetch("http://healthymind.infinityfreeapp.com/requestAppointment.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(requestBody),
+    })
       .then((response) => response.json())
       .then((data) => {
         if (data.success) {

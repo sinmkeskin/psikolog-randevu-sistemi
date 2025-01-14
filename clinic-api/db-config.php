@@ -1,8 +1,8 @@
 <?php
-$servername = "healthymind-server";
-$username = "ncmhsuvwtu";
-$password = "$muv776AVu5HgRcT";
-$dbname = "healthymind-database";
+$servername = "sql104.infinityfree.com";
+$username = "if0_38104156";
+$password = "Gh9R7CSk7lDD";
+$dbname = "if0_38104156_clinic";
 
 // Veritabanı bağlantısını kur
 $conn = new mysqli($servername, $username, $password, $dbname);
